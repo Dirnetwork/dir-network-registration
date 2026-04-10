@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نموذج انضمام الشركات — داير هاب جروب</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --or:#F5A623;--or-d:#D4891A;--or-light:rgba(245,166,35,0.12);
+  --dark:#111827;--card:#1F2937;--input:#374151;
+  --bdr:rgba(245,166,35,0.2);--bdr-f:rgba(245,166,35,0.65);
+  --txt:#F9FAFB;--txt2:rgba(249,250,251,0.65);--txt3:rgba(249,250,251,0.35);
+  --success:#10B981;--error:#EF4444;
+}
+body{font-family:'Cairo',sans-serif;background:var(--dark);color:var(--txt);min-height:100vh;direction:rtl}
+
+/* ═══════════════ HEADER ═══════════════ */
+.hdr{
+  background:linear-gradient(135deg,#111827 0%,#1F2937 50%,#111827 100%);
+  border-bottom:2px solid var(--or);
+  padding:1.8rem 2.5rem 1.5rem;
+  position:relative;overflow:hidden
+}
+.hdr::before{content:'';position:absolute;width:320px;height:320px;border-radius:50%;border:1px solid rgba(245,166,35,0.08);top:-160px;left:-80px}
+.hdr::after{content:'';position:absolute;width:200px;height:200px;border-radius:50%;border:1px solid rgba(245,166,35,0.06);bottom:-100px;right:15%}
+.hdr-inner{position:relative;z-index:1;max-width:780px;margin:0 auto}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-box{width:50px;height:50px;background:var(--or);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#111827;letter-spacing:-1px;flex-shrink:0}
+.logo-txt .n{font-size:17px;font-weight:700}
+.logo-txt .s{font-size:10px;color:var(--or);letter-spacing:2px;margin-top:1px}
+.hdr-badge{background:var(--or-light);border:1px solid rgba(245,166,35,0.3);color:var(--or);font-size:11px;padding:5px 14px;border-radius:20px;white-space:nowrap}
+.hdr-title{font-size:22px;font-weight:800;margin-bottom:3px}
+.hdr-sub{font-size:13px;color:var(--txt2)}
+
+/* ═══════════════ PROGRESS ═══════════════ */
+.progress{display:flex;gap:4px;margin-top:1.5rem}
+.pstep{flex:1;cursor:pointer}
+.pline{height:3px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:5px;transition:background .3s}
+.plabel{font-size:10px;color:var(--txt3);text-align:center;transition:color .3s}
+.pstep.done .pline{background:rgba(245,166,35,0.5)}
+.pstep.active .pline{background:var(--or)}
+.pstep.active .plabel{color:var(--or);font-weight:700}
+.pstep.done .plabel{color:var(--txt2)}
+
+/* ═══════════════ BODY ═══════════════ */
+.body{max-width:780px;margin:0 auto;padding:2rem 2.5rem 3rem}
+
+
+
+/* ═══════════════ SECTION ═══════════════ */
+.sec{display:none;animation:fadeIn .3s ease}
+.sec.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.sec-title{display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;padding-bottom:12px;border-bottom:1px solid var(--bdr)}
+.sec-icon{width:38px;height:38px;background:var(--or-light);border:1px solid rgba(245,166,35,0.25);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.sec-title h3{font-size:16px;font-weight:700}
+.sec-title p{font-size:12px;color:var(--txt2);margin-top:1px}
+
+/* ═══════════════ FIELDS ═══════════════ */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid.full{grid-template-columns:1fr}
+.fg{display:flex;flex-direction:column;gap:6px}
+.fg.s2{grid-column:span 2}
+label.fl{font-size:13px;font-weight:600;color:var(--txt2)}
+label.fl .req{color:var(--or)}
+input,select,textarea{
+  background:rgba(55,65,81,0.6);border:1px solid var(--bdr);border-radius:9px;
+  padding:10px 14px;font-family:'Cairo',sans-serif;font-size:13px;
+  color:var(--txt);direction:rtl;outline:none;width:100%;
+  transition:border-color .2s,background .2s
+}
+input:focus,select:focus,textarea:focus{border-color:var(--bdr-f);background:rgba(55,65,81,0.9)}
+input::placeholder,textarea::placeholder{color:var(--txt3)}
+select option{background:#1F2937;color:#fff}
+textarea{resize:vertical;min-height:85px}
+
+/* ═══════════════ CHECKBOXES ═══════════════ */
+.chk-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.chk-item{display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(55,65,81,0.4);border:1px solid var(--bdr);border-radius:8px;cursor:pointer;font-size:12px;color:var(--txt2);transition:all .2s}
+.chk-item:hover{border-color:rgba(245,166,35,0.45);background:rgba(245,166,35,0.06)}
+.chk-item input{accent-color:var(--or);width:14px;height:14px;flex-shrink:0}
+
+/* ═══════════════ RADIO CARDS ═══════════════ */
+.rg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.rc{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 10px;background:rgba(55,65,81,0.4);border:1px solid var(--bdr);border-radius:11px;cursor:pointer;text-align:center;transition:all .2s}
+.rc:hover{border-color:rgba(245,166,35,0.45)}
+.rc.sel{border-color:var(--or);background:rgba(245,166,35,0.1)}
+.rc input{display:none}
+.rc .ri{font-size:24px}
+.rc .rt{font-size:12px;font-weight:700;color:var(--txt)}
+.rc .rs{font-size:10px;color:var(--txt2);line-height:1.5}
+
+/* ═══════════════ INFO / DECLARATION ═══════════════ */
+.info-box{background:rgba(245,166,35,0.07);border:1px solid rgba(245,166,35,0.18);border-radius:10px;padding:14px 16px;margin-bottom:1.2rem;font-size:12px;color:var(--txt2);line-height:1.8}
+.info-box strong{color:var(--or)}
+.decl-box{background:rgba(55,65,81,0.4);border:1px solid var(--bdr);border-radius:11px;padding:1.4rem;margin-bottom:1.2rem}
+.decl-txt{font-size:13px;color:var(--txt2);line-height:1.9;margin-bottom:1rem}
+.confirm-row{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--txt);cursor:pointer;padding:10px 14px;background:rgba(245,166,35,0.05);border:1px solid rgba(245,166,35,0.18);border-radius:8px}
+.confirm-row input{accent-color:var(--or);width:16px;height:16px;flex-shrink:0}
+
+/* ═══════════════ BUTTONS ═══════════════ */
+.btn-row{display:flex;align-items:center;justify-content:space-between;margin-top:1.8rem;gap:12px}
+.step-c{font-size:12px;color:var(--txt3)}
+.btn{font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;padding:11px 26px;border-radius:9px;cursor:pointer;transition:all .2s;border:none}
+.btn-next{background:var(--or);color:#111827}
+.btn-next:hover{background:var(--or-d)}
+.btn-back{background:transparent;border:1px solid var(--bdr);color:var(--txt2)}
+.btn-back:hover{border-color:rgba(245,166,35,0.4);color:var(--txt)}
+.btn-submit{background:var(--or);color:#111827;padding:13px 0;font-size:14px;flex:1;border-radius:10px}
+.btn-submit:hover:not(:disabled){background:var(--or-d);transform:translateY(-1px)}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* ═══════════════ STATUS BAR ═══════════════ */
+.status-bar{display:none;margin-top:1.5rem;padding:14px 18px;border-radius:10px;font-size:13px;font-weight:600;align-items:center;gap:10px}
+.status-bar.loading{background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.2);color:var(--or);display:flex}
+.status-bar.ok{background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.25);color:#10B981;display:flex}
+.status-bar.err{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);color:#EF4444;display:flex}
+.spinner{width:16px;height:16px;border:2px solid rgba(245,166,35,0.3);border-top-color:var(--or);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ═══════════════ SUCCESS ═══════════════ */
+.success-screen{display:none;text-align:center;padding:3rem 2rem;animation:fadeIn .4s ease}
+.success-screen.active{display:block}
+.suc-icon{width:80px;height:80px;background:rgba(16,185,129,0.1);border:2px solid #10B981;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 1.5rem}
+.suc-title{font-size:22px;font-weight:800;margin-bottom:8px}
+.suc-sub{font-size:13px;color:var(--txt2);line-height:1.8;margin-bottom:1.5rem}
+.suc-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:400px;margin:0 auto 1.5rem}
+.suc-card{background:rgba(55,65,81,0.5);border:1px solid var(--bdr);border-radius:10px;padding:14px;text-align:center}
+.suc-card .sc-icon{font-size:24px;margin-bottom:6px}
+.suc-card .sc-label{font-size:11px;color:var(--txt2);margin-bottom:4px}
+.suc-card .sc-val{font-size:13px;font-weight:700;color:var(--or)}
+.ref-code{display:inline-block;padding:10px 28px;background:var(--or-light);border:1px dashed rgba(245,166,35,0.4);border-radius:9px;font-size:20px;font-weight:800;color:var(--or);letter-spacing:3px;margin-bottom:6px}
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
+@media(max-width:600px){
+  .grid{grid-template-columns:1fr}
+  .fg.s2{grid-column:span 1}
+  .rg{grid-template-columns:1fr}
+  .chk-grid{grid-template-columns:1fr}
+  .body{padding:1.5rem}
+  .hdr{padding:1.5rem}
+  .suc-cards{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-top">
+      <div class="logo">
+        <div class="logo-box">DiR</div>
+        <div class="logo-txt">
+          <div class="n">داير هاب جروب</div>
+          <div class="s">DO IT RIGHT</div>
+        </div>
+      </div>
+      <div class="hdr-badge">🌍 شبكة الشركاء الدولية</div>
+    </div>
+    <div class="hdr-title">نموذج طلب الانضمام للشبكة</div>
+    <div class="hdr-sub">يُرجى تعبئة جميع البيانات بدقة — تُرسل النتائج تلقائياً لـ ClickUp وGoogle Sheets</div>
+    <div class="progress" id="progressBar">
+      <div class="pstep active" data-step="1"><div class="pline"></div><div class="plabel">بيانات الشركة</div></div>
+      <div class="pstep" data-step="2"><div class="pline"></div><div class="plabel">جهة التواصل</div></div>
+      <div class="pstep" data-step="3"><div class="pline"></div><div class="plabel">النشاط والتغطية</div></div>
+      <div class="pstep" data-step="4"><div class="pline"></div><div class="plabel">نوع الشراكة</div></div>
+      <div class="pstep" data-step="5"><div class="pline"></div><div class="plabel">الإقرار والتقديم</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="body">
+
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- STEP 1 — بيانات الشركة -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="sec active" id="sec1">
+    <div class="sec-title">
+      <div class="sec-icon">🏢</div>
+      <div><h3>بيانات الشركة</h3><p>المعلومات الأساسية والقانونية للشركة</p></div>
+    </div>
+    <div class="grid">
+      <div class="fg s2"><label class="fl">الاسم الرسمي للشركة <span class="req">*</span></label><input id="companyName" type="text" placeholder="الاسم الكامل كما هو مُسجَّل رسمياً"></div>
+      <div class="fg"><label class="fl">الاسم التجاري / العلامة التجارية</label><input id="tradeName" type="text" placeholder="إن وُجد"></div>
+      <div class="fg"><label class="fl">رقم السجل التجاري <span class="req">*</span></label><input id="regNum" type="text" placeholder="رقم التسجيل الرسمي"></div>
+      <div class="fg"><label class="fl">الدولة <span class="req">*</span></label>
+        <select id="country">
+          <option value="">-- اختر الدولة --</option>
+          <option>مصر</option><option>المملكة العربية السعودية</option><option>الإمارات العربية المتحدة</option>
+          <option>الكويت</option><option>قطر</option><option>البحرين</option><option>عُمان</option>
+          <option>الأردن</option><option>العراق</option><option>لبنان</option><option>المغرب</option>
+          <option>الجزائر</option><option>تونس</option><option>ليبيا</option><option>السودان</option>
+          <option>اليمن</option><option>دولة أخرى</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">المدينة / المنطقة <span class="req">*</span></label><input id="city" type="text" placeholder="المقر الرئيسي"></div>
+      <div class="fg"><label class="fl">سنة التأسيس <span class="req">*</span></label><input id="foundYear" type="number" placeholder="مثال: 2015" min="1950" max="2025"></div>
+      <div class="fg"><label class="fl">حجم الشركة</label>
+        <select id="companySize">
+          <option value="">-- اختر --</option>
+          <option>1–5 موظفين</option><option>6–20 موظف</option><option>21–50 موظف</option>
+          <option>51–200 موظف</option><option>200+ موظف</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">الموقع الإلكتروني</label><input id="website" type="text" placeholder="www.company.com" dir="ltr"></div>
+      <div class="fg"><label class="fl">هاتف الشركة <span class="req">*</span></label><input id="companyPhone" type="tel" placeholder="+966 5X XXX XXXX" dir="ltr"></div>
+      <div class="fg"><label class="fl">البريد الرسمي <span class="req">*</span></label><input id="companyEmail" type="email" placeholder="info@company.com" dir="ltr"></div>
+    </div>
+    <div class="btn-row"><span class="step-c">الخطوة 1 من 5</span><button class="btn btn-next" onclick="goNext(1)">التالي ←</button></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- STEP 2 — جهة التواصل -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="sec" id="sec2">
+    <div class="sec-title">
+      <div class="sec-icon">👤</div>
+      <div><h3>بيانات المسؤول / جهة التواصل</h3><p>الشخص المفوَّض للتواصل بشأن طلب الانضمام</p></div>
+    </div>
+    <div class="grid">
+      <div class="fg"><label class="fl">الاسم الكامل <span class="req">*</span></label><input id="contactName" type="text" placeholder="الاسم الأول والأخير"></div>
+      <div class="fg"><label class="fl">المسمى الوظيفي <span class="req">*</span></label><input id="contactTitle" type="text" placeholder="مثال: المدير التنفيذي"></div>
+      <div class="fg"><label class="fl">رقم الجوال <span class="req">*</span></label><input id="contactPhone" type="tel" placeholder="+966 5X XXX XXXX" dir="ltr"></div>
+      <div class="fg"><label class="fl">WhatsApp (إن اختلف)</label><input id="contactWA" type="tel" placeholder="+966 5X XXX XXXX" dir="ltr"></div>
+      <div class="fg s2"><label class="fl">البريد الإلكتروني <span class="req">*</span></label><input id="contactEmail" type="email" placeholder="name@company.com" dir="ltr"></div>
+      <div class="fg"><label class="fl">LinkedIn</label><input id="linkedin" type="text" placeholder="linkedin.com/in/..." dir="ltr"></div>
+      <div class="fg"><label class="fl">اللغات المُتحدَّث بها</label><input id="languages" type="text" placeholder="مثال: العربية، الإنجليزية"></div>
+    </div>
+    <div class="btn-row"><button class="btn btn-back" onclick="goPrev(2)">→ السابق</button><span class="step-c">الخطوة 2 من 5</span><button class="btn btn-next" onclick="goNext(2)">التالي ←</button></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- STEP 3 — النشاط والتغطية -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="sec" id="sec3">
+    <div class="sec-title">
+      <div class="sec-icon">📊</div>
+      <div><h3>النشاط التجاري والتغطية الجغرافية</h3><p>قطاعات العمل ونطاق التغطية الحالية</p></div>
+    </div>
+    <div class="grid">
+      <div class="fg"><label class="fl">القطاع الرئيسي <span class="req">*</span></label>
+        <select id="sector">
+          <option value="">-- اختر --</option>
+          <option>تسويق رقمي وإعلانات</option><option>تقنية المعلومات والبرمجيات</option>
+          <option>استشارات أعمال</option><option>تجارة إلكترونية</option><option>خدمات مالية</option>
+          <option>تصميم وإنتاج إبداعي</option><option>علاقات عامة وإعلام</option>
+          <option>تدريب وتطوير بشري</option><option>خدمات قانونية وإدارية</option><option>أخرى</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">سنوات الخبرة في المبيعات</label>
+        <select id="salesExp">
+          <option value="">-- اختر --</option>
+          <option>أقل من سنة</option><option>1–3 سنوات</option><option>3–5 سنوات</option>
+          <option>5–10 سنوات</option><option>أكثر من 10 سنوات</option>
+        </select>
+      </div>
+      <div class="fg s2"><label class="fl">وصف النشاط التجاري <span class="req">*</span></label><textarea id="bizDesc" placeholder="اشرح باختصار ما تقدمه شركتك من خدمات أو منتجات، والقطاعات التي تخدمها..."></textarea></div>
+      <div class="fg s2">
+        <label class="fl">التغطية الجغرافية الحالية <span class="req">*</span></label>
+        <div class="chk-grid" id="geoChk">
+          <label class="chk-item"><input type="checkbox" value="مصر"> مصر 🇪🇬</label>
+          <label class="chk-item"><input type="checkbox" value="السعودية"> السعودية 🇸🇦</label>
+          <label class="chk-item"><input type="checkbox" value="الإمارات"> الإمارات 🇦🇪</label>
+          <label class="chk-item"><input type="checkbox" value="الكويت"> الكويت 🇰🇼</label>
+          <label class="chk-item"><input type="checkbox" value="قطر"> قطر 🇶🇦</label>
+          <label class="chk-item"><input type="checkbox" value="البحرين"> البحرين 🇧🇭</label>
+          <label class="chk-item"><input type="checkbox" value="عُمان"> عُمان 🇴🇲</label>
+          <label class="chk-item"><input type="checkbox" value="الأردن"> الأردن 🇯🇴</label>
+          <label class="chk-item"><input type="checkbox" value="المغرب العربي"> المغرب العربي 🌍</label>
+          <label class="chk-item"><input type="checkbox" value="أوروبا وأمريكا"> أوروبا / أمريكا ✈️</label>
+        </div>
+      </div>
+      <div class="fg s2"><label class="fl">قاعدة العملاء الحالية</label><textarea id="clientBase" placeholder="مثال: نخدم 50+ شركة في قطاع التجزئة بالرياض..." style="min-height:65px"></textarea></div>
+    </div>
+    <div class="btn-row"><button class="btn btn-back" onclick="goPrev(3)">→ السابق</button><span class="step-c">الخطوة 3 من 5</span><button class="btn btn-next" onclick="goNext(3)">التالي ←</button></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- STEP 4 — نوع الشراكة -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="sec" id="sec4">
+    <div class="sec-title">
+      <div class="sec-icon">🤝</div>
+      <div><h3>نوع الشراكة المطلوبة</h3><p>اختر نموذج الانضمام الأنسب لشركتك</p></div>
+    </div>
+    <div style="margin-bottom:1.3rem">
+      <label class="fl" style="display:block;margin-bottom:10px">نموذج الشراكة <span class="req">*</span></label>
+      <div class="rg" id="partnerCards">
+        <div class="rc" onclick="selPartner(this,'وكيل معتمد')"><input type="radio" name="pt"><div class="ri">🏅</div><div class="rt">وكيل معتمد</div><div class="rs">تمثيل حصري أو مشترك في منطقة جغرافية محددة</div></div>
+        <div class="rc" onclick="selPartner(this,'موزع مرخص')"><input type="radio" name="pt"><div class="ri">📦</div><div class="rt">موزع مرخص</div><div class="rs">إعادة بيع خدمات داير لعملائك بهامش ربحي</div></div>
+        <div class="rc" onclick="selPartner(this,'شريك تبادل خدمات B2B')"><input type="radio" name="pt"><div class="ri">🔄</div><div class="rt">تبادل خدمات B2B</div><div class="rs">تبادل الخدمات بين الشركتين مباشرةً</div></div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="fg s2">
+        <label class="fl">الخدمات التي يمكنك تسويقها</label>
+        <div class="chk-grid" id="svcChk">
+          <label class="chk-item"><input type="checkbox" value="تسويق رقمي"> تسويق رقمي وحسابات</label>
+          <label class="chk-item"><input type="checkbox" value="تطوير مواقع"> تطوير مواقع وتطبيقات</label>
+          <label class="chk-item"><input type="checkbox" value="هوية بصرية"> هوية بصرية وتصميم</label>
+          <label class="chk-item"><input type="checkbox" value="إنتاج محتوى"> إنتاج فيديو ومحتوى</label>
+          <label class="chk-item"><input type="checkbox" value="استشارات تأسيس"> استشارات تأسيس شركات</label>
+          <label class="chk-item"><input type="checkbox" value="ERP وأنظمة"> خدمات ERP وأنظمة</label>
+          <label class="chk-item"><input type="checkbox" value="SEO وإعلانات"> SEO وإعلانات مدفوعة</label>
+          <label class="chk-item"><input type="checkbox" value="أخرى"> خدمات أخرى</label>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">المبيعات الشهرية المتوقعة</label>
+        <select id="salesTarget">
+          <option value="">-- اختر --</option>
+          <option>أقل من 5,000 $</option><option>5,000–15,000 $</option>
+          <option>15,000–50,000 $</option><option>50,000–100,000 $</option><option>أكثر من 100,000 $</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">هل تحتاج إلى تدريب؟</label>
+        <select id="needTraining">
+          <option value="">-- اختر --</option>
+          <option>نعم، تدريب شامل</option><option>نعم، تدريب جزئي</option><option>لا، لدينا خبرة كافية</option>
+        </select>
+      </div>
+      <div class="fg s2"><label class="fl">ملاحظات إضافية</label><textarea id="notes" placeholder="أي معلومات تودّ مشاركتها..." style="min-height:65px"></textarea></div>
+    </div>
+    <div class="btn-row"><button class="btn btn-back" onclick="goPrev(4)">→ السابق</button><span class="step-c">الخطوة 4 من 5</span><button class="btn btn-next" onclick="goNext(4)">التالي ←</button></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- STEP 5 — الإقرار -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="sec" id="sec5">
+    <div class="sec-title">
+      <div class="sec-icon">📋</div>
+      <div><h3>الإقرار والتقديم</h3><p>مراجعة الشروط وتأكيد الطلب</p></div>
+    </div>
+    <div class="decl-box">
+      <div class="decl-txt">
+        أقرّ أنا الموقّع على هذا النموذج بأن جميع البيانات المُقدَّمة صحيحة ودقيقة، وأنني مفوَّض رسمياً من الشركة للتقدم بهذا الطلب.<br><br>
+        أتعهّد بالالتزام بمعايير الجودة والأخلاقيات المهنية التي تعتمدها <strong style="color:var(--or)">داير هاب جروب</strong>، وأوافق على مراجعة الطلب خلال <strong style="color:var(--or)">5 أيام عمل</strong>.
+      </div>
+      <label class="confirm-row">
+        <input type="checkbox" id="declareCheck">
+        أوافق على الشروط والأحكام وأقرّ بصحة جميع المعلومات المُدخَلة
+      </label>
+    </div>
+    <div class="info-box">
+      <strong>ما يحدث بعد التقديم:</strong><br>
+      ① يُنشأ تلقائياً task في ClickUp لفريق داير &nbsp;|&nbsp;
+      ② تُسجَّل البيانات في Google Sheets للمتابعة &nbsp;|&nbsp;
+      ③ يتواصل معكم الفريق خلال 5 أيام عمل
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-back" onclick="goPrev(5)">→ السابق</button>
+      <span class="step-c">الخطوة 5 من 5</span>
+      <button class="btn btn-submit" id="submitBtn" onclick="handleSubmit()">تقديم الطلب ✓</button>
+    </div>
+    <div class="status-bar" id="statusBar">
+      <div class="spinner" id="spinner"></div>
+      <span id="statusMsg">جارٍ إرسال الطلب...</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SUCCESS SCREEN -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="success-screen" id="successScreen">
+    <div class="suc-icon">✓</div>
+    <div class="suc-title">تم استلام طلبكم بنجاح! 🎉</div>
+    <div class="suc-sub">شكراً لاهتمامكم بالانضمام لشبكة داير هاب جروب الدولية.<br>سيتواصل معكم فريقنا خلال 5 أيام عمل.</div>
+    <div class="suc-cards">
+      <div class="suc-card"><div class="sc-icon">📋</div><div class="sc-label">ClickUp Task</div><div class="sc-val" id="cupStatus">✓ تم الإنشاء</div></div>
+      <div class="suc-card"><div class="sc-icon">📊</div><div class="sc-label">Google Sheets</div><div class="sc-val" id="sheetStatus">✓ تم الحفظ</div></div>
+    </div>
+    <div class="ref-code" id="refCode">DIR-2026-XXXX</div>
+    <p style="font-size:12px;color:var(--txt3);margin-top:8px">رقم المرجع — احتفظ به للمتابعة</p>
+  </div>
+
+</div><!-- /body -->
+
+<script>
+let currentStep = 1;
+let partnerTypeVal = '';
+
+/* ═══ SETUP TOGGLE ═══ */
+document.getElementById('setupToggle').addEventListener('click', function(){
+  this.classList.toggle('open');
+  document.getElementById('setupBody').classList.toggle('open');
+});
+
+function copyScript(){
+  const t = document.getElementById('appsScriptCode').innerText;
+  navigator.clipboard.writeText(t).then(()=>{ alert('تم النسخ!'); });
+}
+
+/* ═══ NAVIGATION ═══ */
+function goNext(n){ currentStep = n + 1; render(); }
+function goPrev(n){ currentStep = n - 1; render(); }
+
+function render(){
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  const s = document.getElementById('sec' + currentStep);
+  if(s) s.classList.add('active');
+  document.querySelectorAll('.pstep').forEach((el, i) => {
+    el.classList.remove('active','done');
+    const n = i + 1;
+    if(n === currentStep) el.classList.add('active');
+    else if(n < currentStep) el.classList.add('done');
+  });
+}
+
+/* ═══ PARTNER TYPE ═══ */
+function selPartner(card, val){
+  document.querySelectorAll('.rc').forEach(c => c.classList.remove('sel'));
+  card.classList.add('sel');
+  partnerTypeVal = val;
+}
+
+/* ═══ COLLECT DATA ═══ */
+function getGeo(){ return [...document.querySelectorAll('#geoChk input:checked')].map(c=>c.value).join('، '); }
+function getSvc(){ return [...document.querySelectorAll('#svcChk input:checked')].map(c=>c.value).join('، '); }
+function v(id){ return document.getElementById(id)?.value?.trim() || ''; }
+
+function collectData(ref){
+  return {
+    ref,
+    companyName: v('companyName'), tradeName: v('tradeName'), regNum: v('regNum'),
+    country: v('country'), city: v('city'), foundYear: v('foundYear'),
+    companySize: v('companySize'), website: v('website'),
+    companyPhone: v('companyPhone'), companyEmail: v('companyEmail'),
+    contactName: v('contactName'), contactTitle: v('contactTitle'),
+    contactPhone: v('contactPhone'), contactWA: v('contactWA'),
+    contactEmail: v('contactEmail'), linkedin: v('linkedin'), languages: v('languages'),
+    sector: v('sector'), salesExp: v('salesExp'), bizDesc: v('bizDesc'),
+    geoAreas: getGeo(), clientBase: v('clientBase'),
+    partnerType: partnerTypeVal, services: getSvc(),
+    salesTarget: v('salesTarget'), needTraining: v('needTraining'), notes: v('notes')
+  };
+}
+
+/* ═══ STATUS HELPERS ═══ */
+function setStatus(type, msg){
+  const bar = document.getElementById('statusBar');
+  const msgEl = document.getElementById('statusMsg');
+  const sp = document.getElementById('spinner');
+  bar.className = 'status-bar ' + type;
+  msgEl.textContent = msg;
+  if(type !== 'loading') sp.style.display = 'none';
+  else sp.style.display = 'block';
+}
+
+/* ═══ CLICKUP DIRECT API ═══ */
+const CU_TOKEN = 'pk_66286244_TLK695D8EBAD5UQ66UKCD5ASENKFS648';
+const CU_LIST  = '901217024718';
+
+async function sendToClickUp(data){
+  const desc = `## طلب انضمام شركة جديدة
+
+**الشركة:** ${data.companyName} ${data.tradeName ? '(' + data.tradeName + ')' : ''}
+**السجل التجاري:** ${data.regNum}
+**الدولة / المدينة:** ${data.country} — ${data.city}
+**سنة التأسيس:** ${data.foundYear} | **الحجم:** ${data.companySize}
+**الموقع:** ${data.website || 'غير محدد'}
+**الهاتف:** ${data.companyPhone} | **البريد:** ${data.companyEmail}
+
+---
+
+### 👤 جهة التواصل
+**الاسم:** ${data.contactName} — ${data.contactTitle}
+**الجوال:** ${data.contactPhone} | **واتساب:** ${data.contactWA || data.contactPhone}
+**البريد:** ${data.contactEmail}
+**LinkedIn:** ${data.linkedin || 'غير محدد'}
+
+---
+
+### 📊 النشاط التجاري
+**القطاع:** ${data.sector} | **خبرة المبيعات:** ${data.salesExp}
+**التغطية الجغرافية:** ${data.geoAreas}
+**وصف النشاط:** ${data.bizDesc}
+
+---
+
+### 🤝 نوع الشراكة
+**نموذج الشراكة:** ${data.partnerType}
+**الخدمات المستهدفة:** ${data.services || 'غير محدد'}
+**الهدف البيعي الشهري:** ${data.salesTarget || 'غير محدد'}
+**التدريب المطلوب:** ${data.needTraining || 'غير محدد'}
+
+---
+
+**رقم المرجع:** ${data.ref}
+**تاريخ التقديم:** ${new Date().toLocaleString('ar-EG')}`;
+
+  const resp = await fetch(`https://api.clickup.com/api/v2/list/${CU_LIST}/task`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': CU_TOKEN
+    },
+    body: JSON.stringify({
+      name: `طلب انضمام — ${data.companyName} | ${data.ref}`,
+      markdown_description: desc,
+      priority: 2,
+      status: 'to do'
+    })
+  });
+  if(!resp.ok) throw new Error('ClickUp error: ' + resp.status);
+  return await resp.json();
+}
+
+/* ═══ GOOGLE SHEETS ═══ */
+/* ═══ GOOGLE SHEETS ═══ */
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycby0L9ZsHvcRUqfeWUTjG33NQnaytZ5vgOwh0nnMS-WF-dRfItguOerqIMIktLsIdJrt/exec'; // ضع رابط Google Apps Script هنا
+
+async function sendToSheets(data){
+  if(!SHEETS_URL) return {skipped: true};
+  try {
+    await fetch(SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        ref: data.ref,
+        date: new Date().toLocaleString('ar-EG'),
+        companyName: data.companyName,
+        tradeName: data.tradeName,
+        country: data.country,
+        city: data.city,
+        foundYear: data.foundYear,
+        companySize: data.companySize,
+        website: data.website,
+        companyPhone: data.companyPhone,
+        companyEmail: data.companyEmail,
+        contactName: data.contactName,
+        contactTitle: data.contactTitle,
+        contactPhone: data.contactPhone,
+        contactWA: data.contactWA,
+        contactEmail: data.contactEmail,
+        linkedin: data.linkedin,
+        languages: data.languages,
+        sector: data.sector,
+        salesExp: data.salesExp,
+        bizDesc: data.bizDesc,
+        geoAreas: data.geoAreas,
+        partnerType: data.partnerType,
+        services: data.services,
+        salesTarget: data.salesTarget,
+        needTraining: data.needTraining,
+        notes: data.notes
+      })
+    });
+    return {ok: true};
+  } catch(e) {
+    console.error('Sheets error:', e);
+    return {error: e.message};
+  }
+}
+
+/* ═══ SUBMIT ═══ */
+async function handleSubmit(){
+  if(!document.getElementById('declareCheck').checked){
+    const el = document.querySelector('.confirm-row');
+    el.style.borderColor = '#EF4444';
+    setTimeout(()=>{ el.style.borderColor = 'rgba(245,166,35,0.18)'; }, 2500);
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+
+  const ref = 'DIR-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random()*9000);
+  const data = collectData(ref);
+
+  setStatus('loading', 'جارٍ إنشاء المهمة في ClickUp...');
+
+  let cupOk = false, sheetOk = false;
+
+  try {
+    await sendToClickUp(data);
+    cupOk = true;
+  } catch(e){
+    console.error('ClickUp error:', e);
+  }
+
+  setStatus('loading', 'جارٍ الحفظ في Google Sheets...');
+
+  try {
+    const r = await sendToSheets(data);
+    sheetOk = !r.skipped;
+  } catch(e){
+    console.error('Sheets error:', e);
+  }
+
+  // Show success
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.getElementById('statusBar').style.display = 'none';
+  document.getElementById('successScreen').classList.add('active');
+  document.querySelector('.progress').style.opacity = '0.35';
+
+  document.getElementById('refCode').textContent = ref;
+  document.getElementById('cupStatus').textContent = cupOk ? '✓ تم الإنشاء' : '⚠️ يُراجع يدوياً';
+  document.getElementById('cupStatus').style.color = cupOk ? '#10B981' : '#F59E0B';
+  document.getElementById('sheetStatus').textContent = sheetOk ? '✓ تم الحفظ' : SHEETS_URL ? '⚠️ تحقق من الرابط' : '— لم يُضبط';
+  document.getElementById('sheetStatus').style.color = sheetOk ? '#10B981' : '#F59E0B';
+}
+</script>
+</body>
+</html>
