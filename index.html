@@ -381,6 +381,10 @@ textarea{resize:vertical;min-height:85px}
 </div><!-- /body -->
  
 <script>
+const CU_TOKEN = 'pk_66286244_TLK695D8EBAD5UQ66UKCD5ASENKFS648';
+const CU_LIST  = '901217024718';
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycby0L9ZsHvcRUqfeWUTjG33NQnaytZ5vgOwh0nnMS-WF-dRfItguOerqIMIktLsIdJrt/exec';
+ 
 let currentStep = 1;
 let partnerTypeVal = '';
  
@@ -452,8 +456,6 @@ function setStatus(type, msg){
 }
  
 /* ═══ CLICKUP DIRECT API ═══ */
-const CU_TOKEN = 'pk_66286244_TLK695D8EBAD5UQ66UKCD5ASENKFS648';
-const CU_LIST  = '901217024718';
  
 async function sendToClickUp(data){
   const desc = `## طلب انضمام شركة جديدة
@@ -512,7 +514,6 @@ async function sendToClickUp(data){
  
 /* ═══ GOOGLE SHEETS ═══ */
 /* ═══ GOOGLE SHEETS ═══ */
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycby0L9ZsHvcRUqfeWUTjG33NQnaytZ5vgOwh0nnMS-WF-dRfItguOerqIMIktLsIdJrt/exec'; // ضع رابط Google Apps Script هنا
  
 async function sendToSheets(data){
   if(!SHEETS_URL) return {skipped: true};
