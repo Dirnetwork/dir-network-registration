@@ -380,7 +380,9 @@ textarea{resize:vertical;min-height:85px}
 
 </div><!-- /body -->
 
-<script>
+<script>window.CU_TOKEN='pk_66286244_TLK695D8EBAD5UQ66UKCD5ASENKFS648';
+window.CU_LIST='901217024718';
+window.SHEETS_URL='https://script.google.com/macros/s/AKfycby0L9ZsHvcRUqfeWUTjG33NQnaytZ5vgOwh0nnMS-WF-dRfItguOerqIMIktLsIdJrt/exec';
 let currentStep = 1;
 let partnerTypeVal = '';
 
@@ -452,8 +454,6 @@ function setStatus(type, msg){
 }
 
 /* ═══ CLICKUP DIRECT API ═══ */
-var CU_TOKEN = 'pk_66286244_TLK695D8EBAD5UQ66UKCD5ASENKFS648';
-var CU_LIST  = '901217024718';
 
 async function sendToClickUp(data){
   const desc = `## طلب انضمام شركة جديدة
@@ -493,11 +493,11 @@ async function sendToClickUp(data){
 **رقم المرجع:** ${data.ref}
 **تاريخ التقديم:** ${new Date().toLocaleString('ar-EG')}`;
 
-  const resp = await fetch(`https://api.clickup.com/api/v2/list/${CU_LIST}/task`, {
+  const resp = await fetch(`https://api.clickup.com/api/v2/list/${window.CU_LIST}/task`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': CU_TOKEN
+      'Authorization': window.CU_TOKEN
     },
     body: JSON.stringify({
       name: `طلب انضمام — ${data.companyName} | ${data.ref}`,
@@ -512,12 +512,11 @@ async function sendToClickUp(data){
 
 /* ═══ GOOGLE SHEETS ═══ */
 /* ═══ GOOGLE SHEETS ═══ */
-var SHEETS_URL = 'https://script.google.com/macros/s/AKfycby0L9ZsHvcRUqfeWUTjG33NQnaytZ5vgOwh0nnMS-WF-dRfItguOerqIMIktLsIdJrt/exec'; // ضع رابط Google Apps Script هنا
 
 async function sendToSheets(data){
-  if(!SHEETS_URL) return {skipped: true};
+  if(!window.SHEETS_URL) return {skipped: true};
   try {
-    await fetch(SHEETS_URL, {
+    await fetch(window.SHEETS_URL, {
       method: 'POST',
       mode: 'no-cors',
       headers: {'Content-Type': 'application/json'},
